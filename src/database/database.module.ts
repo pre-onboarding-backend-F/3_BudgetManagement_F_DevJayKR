@@ -16,7 +16,7 @@ import databaseConfiguration from 'src/global/configs/database-configuration';
 				password: config.password,
 				database: config.database,
 				synchronize: config.synchorize,
-				entities: [__dirname + '/../../**/*.entity.*'],
+				entities: [__dirname + '/../**/*.entity.*'],
 				logging: config.logging,
 			}),
 		}),
