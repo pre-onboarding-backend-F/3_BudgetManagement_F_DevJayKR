@@ -1,0 +1,38 @@
+name: bm-containers
+services:
+    api:
+        container_name: bm-api
+        build:
+            context: .
+            dockerfile: Dockerfile
+        volumes:
+            - ./src:/app/src
+        restart: always
+        ports:
+            - ${SERVER_PORT}:${SERVER_PORT}
+        depends_on:
+            - db
+        networks:
+            - local-network
+
+    db:
+        image: postgres
+        container_name: bm-db
+        environment:
+            POSTGRES_USER: ${POSTGRESQL_USERNAME}
+            POSTGRES_PASSWORD: ${POSTGRESQL_PASSWORD}
+            POSTGRES_DB: ${POSTGRESQL_DATABASE}
+        restart: always
+        volumes:
+            - db:/var/lib/postgresql/data
+        ports:
+            - ${POSTGRESQL_PORT}:${POSTGRESQL_PORT}
+        networks:
+            - local-network
+
+volumes:
+    db:
+
+networks:
+    local-network:
+        driver: bridge
