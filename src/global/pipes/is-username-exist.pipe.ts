@@ -1,9 +1,9 @@
 import { PipeTransform, Injectable, UnprocessableEntityException } from '@nestjs/common';
-import { UsersService } from '../users.service';
-import { CreateUserDto } from '../dto';
+import { UsersService } from '../../auth/users/users.service';
+import { CreateUserDto } from 'src/auth/users/dto/create-user.dto';
 
 @Injectable()
-export class UsernameValidationPipe implements PipeTransform {
+export class IsUsernameExistPipe implements PipeTransform {
 	constructor(private usersService: UsersService) {}
 
 	async transform(value: CreateUserDto) {

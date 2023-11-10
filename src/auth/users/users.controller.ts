@@ -1,14 +1,14 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDto } from './dto';
-import { UsernameValidationPipe } from './pipes/username-validation.pipe';
+import { IsUsernameExistPipe } from 'src/global/pipes/is-username-exist.pipe';
+import { CreateUserDto } from './dto/create-user.dto';
 
 @Controller('users')
 export class UsersController {
 	constructor(private readonly usersService: UsersService) {}
 
 	@Post()
-	async register(@Body(UsernameValidationPipe) createUserDto: CreateUserDto) {
+	async register(@Body(IsUsernameExistPipe) createUserDto: CreateUserDto) {
 		return await this.usersService.create(createUserDto);
 	}
 }

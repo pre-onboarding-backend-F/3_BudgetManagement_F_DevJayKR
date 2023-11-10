@@ -18,6 +18,7 @@ import databaseConfiguration from 'src/global/configs/database-configuration';
 				synchronize: config.synchorize,
 				entities: [__dirname + '/../**/*.entity.*'],
 				logging: config.logging,
+				charset: 'utf8mb4',
 			}),
 		}),
 	],

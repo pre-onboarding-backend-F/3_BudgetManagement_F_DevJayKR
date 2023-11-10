@@ -2,7 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { EntityManager, Repository } from 'typeorm';
 import { User } from './user.entity';
-import { AbstractRepository } from 'src/global';
+import { AbstractRepository } from 'src/global/common/abstract.repository';
 
 @Injectable()
 export class UsersRepository extends AbstractRepository<User> {

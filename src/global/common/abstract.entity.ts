@@ -1,3 +1,4 @@
+import { Exclude, Expose } from 'class-transformer';
 import { CreateDateColumn, DeleteDateColumn, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 export class AbstractEntity<T> {
@@ -9,13 +10,16 @@ export class AbstractEntity<T> {
 	id: string;
 
 	@CreateDateColumn()
-	createdDate: Date;
+	@Expose({ name: 'created_at' })
+	createdAt: Date;
 
 	@UpdateDateColumn({ default: null })
-	modifiedDate: Date;
+	@Expose({ name: 'updated_at' })
+	updatedAt: Date;
 }
 
 export class SoftDeleteEntity<T> extends AbstractEntity<T> {
 	@DeleteDateColumn({ default: null })
-	deletedDate: Date;
+	@Exclude()
+	deletedAt: Date;
 }
