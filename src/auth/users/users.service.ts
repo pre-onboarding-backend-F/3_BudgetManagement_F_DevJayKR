@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { UsersRepository } from './users.repository';
-import { CreateUserDto } from './dto';
 import { User } from './user.entity';
 import { FindOptionsWhere } from 'typeorm';
+import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UsersRepository } from './users.repository';
 
 @Injectable()
 export class UsersService {
@@ -22,5 +23,9 @@ export class UsersService {
 
 	async findOne(where: FindOptionsWhere<User>) {
 		return await this.usersRepository.findOne(where);
+	}
+
+	async update(where: FindOptionsWhere<User>, partialEntity: QueryDeepPartialEntity<User>) {
+		return await this.usersRepository.findOneAndUpdate(where, partialEntity);
 	}
 }

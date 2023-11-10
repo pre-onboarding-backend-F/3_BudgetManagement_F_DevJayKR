@@ -1,8 +1,8 @@
-import { SoftDeleteEntity } from 'src/global';
 import { BeforeInsert, Column, Entity } from 'typeorm';
-import { AGE_GROUPS } from './constants';
 import * as bcrypt from 'bcryptjs';
 import { Exclude, Expose } from 'class-transformer';
+import { SoftDeleteEntity } from 'src/global/common/abstract.entity';
+import { AGE_GROUPS } from './constants/age-groups.constant';
 
 @Entity({ name: 'users' })
 export class User extends SoftDeleteEntity<User> {
@@ -19,6 +19,11 @@ export class User extends SoftDeleteEntity<User> {
 	@Column()
 	@Exclude()
 	password: string;
+
+	@Column({ name: 'refresh_token', nullable: true })
+	@Exclude()
+	@Expose({ name: 'refresh_token' })
+	refreshToken: string;
 
 	@BeforeInsert()
 	async encryption() {

@@ -1,6 +1,6 @@
 import { IsIn, IsNotEmpty, IsString, Length, Matches } from 'class-validator';
-import { AGE_GROUPS } from '../constants';
 import { Expose } from 'class-transformer';
+import { AGE_GROUPS } from '../constants/age-groups.constant';
 
 export class CreateUserDto {
 	@IsString()
