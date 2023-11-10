@@ -1,24 +1,15 @@
-import { IsIn, IsNotEmpty, IsString, Length, Matches } from 'class-validator';
-import { Expose } from 'class-transformer';
-import { AGE_GROUPS } from '../constants/age-groups.constant';
+import { CustomValidator as CV } from 'src/global/classes/custom-validator.class';
 
 export class CreateUserDto {
-	@IsString()
-	@IsNotEmpty()
-	@Length(4, 12)
+	@CV.IsUsername()
 	username: string;
 
-	@IsString()
-	@IsNotEmpty()
-	@Length(6, 20)
+	@CV.IsPassword()
 	password: string;
 
-	@IsString()
-	@Matches(/[가-힣]{2,4}/)
-	@IsNotEmpty()
+	@CV.IsKoreanName()
 	name: string;
 
-	@IsIn(AGE_GROUPS)
-	@Expose({ name: 'age_group' })
+	@CV.IsInAgeGroup()
 	ageGroup: string;
 }

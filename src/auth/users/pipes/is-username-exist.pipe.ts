@@ -1,5 +1,5 @@
 import { PipeTransform, Injectable, UnprocessableEntityException } from '@nestjs/common';
-import { UsersService } from '../../auth/users/users.service';
+import { UsersService } from '../users.service';
 import { CreateUserDto } from 'src/auth/users/dto/create-user.dto';
 
 @Injectable()
@@ -7,6 +7,8 @@ export class IsUsernameExistPipe implements PipeTransform {
 	constructor(private usersService: UsersService) {}
 
 	async transform(value: CreateUserDto) {
+		if (!value) return false;
+
 		const username = value.username;
 
 		const isExist = await this.usersService.exist({ username });
