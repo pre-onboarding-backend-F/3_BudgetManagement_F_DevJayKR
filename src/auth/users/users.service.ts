@@ -9,12 +9,11 @@ export class UsersService {
 	constructor(private readonly usersRepository: UsersRepository) {}
 
 	async create(dto: CreateUserDto) {
-		const newUser = new User({
-			...dto,
-			ageGroup: dto.age_group,
-		});
+		const newUser = new User(dto);
 
 		await this.usersRepository.create(newUser);
+
+		return await this.findOne({ username: dto.username });
 	}
 
 	async exist(where: FindOptionsWhere<User>) {
@@ -24,7 +23,4 @@ export class UsersService {
 	async findOne(where: FindOptionsWhere<User>) {
 		return await this.usersRepository.findOne(where);
 	}
-
-	async find() {}
-	async delete() {}
 }
