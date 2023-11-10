@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { IsUsernameExistPipe } from 'src/global/pipes/is-username-exist.pipe';
+import { IsUsernameExistPipe } from 'src/auth/users/pipes/is-username-exist.pipe';
 import { CreateUserDto } from './dto/create-user.dto';
 
 @Controller('users')

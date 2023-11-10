@@ -22,7 +22,6 @@ export class User extends SoftDeleteEntity<User> {
 
 	@Column({ name: 'refresh_token', nullable: true })
 	@Exclude()
-	@Expose({ name: 'refresh_token' })
 	refreshToken: string;
 
 	@BeforeInsert()
