@@ -27,13 +27,15 @@ export class CustomValidator {
 		return applyDecorators(this.IsNotEmpty(), this.IsString(), this.Length(6, 20));
 	}
 
+	static IsKorean(min: number, max: number, message: string) {
+		return Matches(new RegExp(`[가-힣]{${min},${max}}`), { message: `$property 필드는 ${message}` });
+	}
+
 	static IsKoreanName() {
 		return applyDecorators(
 			this.IsNotEmpty(),
 			this.IsString(),
-			Matches(/[가-힣]{2,4}/, {
-				message: '$property 필드는 2자 이상, 4자 이하의 한글 이름만 가능합니다.',
-			}),
+			this.IsKorean(2, 4, '2자 이상, 4자 이하의 한글 이름만 가능합니다.'),
 		);
 	}
 
