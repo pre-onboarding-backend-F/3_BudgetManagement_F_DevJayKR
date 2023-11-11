@@ -1,6 +1,6 @@
 import { Logger } from '@nestjs/common';
 import { AbstractEntity } from './abstract.entity';
-import { EntityManager, FindOptionsRelations, FindOptionsWhere, Repository } from 'typeorm';
+import { EntityManager, FindManyOptions, FindOptionsRelations, FindOptionsWhere, Repository } from 'typeorm';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 
 export abstract class AbstractRepository<T extends AbstractEntity<T>> {
@@ -31,8 +31,12 @@ export abstract class AbstractRepository<T extends AbstractEntity<T>> {
 		return this.findOne(where);
 	}
 
-	async find(where?: FindOptionsWhere<T>) {
+	async findBy(where?: FindOptionsWhere<T>) {
 		return this.entityRepository.findBy(where);
+	}
+
+	async find(options?: FindManyOptions<T>) {
+		return this.entityRepository.find(options);
 	}
 
 	async findOneAndDelete(where: FindOptionsWhere<T>) {
