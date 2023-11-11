@@ -1,8 +1,9 @@
-import { BeforeInsert, Column, Entity } from 'typeorm';
+import { BeforeInsert, Column, Entity, OneToMany } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
 import { Exclude, Expose } from 'class-transformer';
 import { SoftDeleteEntity } from 'src/global/common/abstract.entity';
 import { AGE_GROUPS } from './constants/age-groups.constant';
+import { Budget } from 'src/budgets/budget.entity';
 
 @Entity({ name: 'users' })
 export class User extends SoftDeleteEntity<User> {
@@ -23,6 +24,9 @@ export class User extends SoftDeleteEntity<User> {
 	@Column({ name: 'refresh_token', nullable: true })
 	@Exclude()
 	refreshToken: string;
+
+	@OneToMany(() => Budget, (budget) => budget.user)
+	budgets: Budget[];
 
 	@BeforeInsert()
 	async encryption() {
