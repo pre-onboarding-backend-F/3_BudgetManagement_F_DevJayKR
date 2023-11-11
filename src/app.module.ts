@@ -8,9 +8,17 @@ import { APP_FILTER } from '@nestjs/core';
 import { HttpExceptionFilter } from './global/filters/http-exception.filter';
 import { ValidationExceptionFilter } from './global/filters/validation-exception.filter';
 import { CategoriesModule } from './categories/categories.module';
+import { BudgetsModule } from './budgets/budgets.module';
 
 @Module({
-	imports: [ConfigModule.forRoot(ConfigModuleOptions), DatabaseModule, AuthModule, UsersModule, CategoriesModule],
+	imports: [
+		ConfigModule.forRoot(ConfigModuleOptions),
+		DatabaseModule,
+		AuthModule,
+		UsersModule,
+		CategoriesModule,
+		BudgetsModule,
+	],
 	providers: [
 		{
 			provide: APP_FILTER,

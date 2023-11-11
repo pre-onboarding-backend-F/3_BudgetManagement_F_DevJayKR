@@ -2,25 +2,23 @@ import { Injectable, OnModuleInit } from '@nestjs/common';
 import { CategoriesRepository } from './category.repository';
 import { Category } from './category.entity';
 import { FindManyOptions, FindOptionsWhere } from 'typeorm';
+import { Categories } from './enum/category.enum';
 
 @Injectable()
 export class CategoriesService implements OnModuleInit {
 	constructor(private readonly categoriesRepository: CategoriesRepository) {}
 
-	private categories = ['고정', '생활', '교통', '의료', '문화', '여행', '교육'];
-
 	async onModuleInit() {
-		const isExist = this.categoriesRepository.exist({
-			name: '고정',
+		const isExist = await this.find({
+			take: 1,
 		});
 
-		if (!isExist) {
-			for (const category of this.categories) {
+		if (isExist.length <= 0) {
+			for (const category of Object.values(Categories)) {
 				const newCategory = new Category({
 					name: category,
 				});
-
-				this.categoriesRepository.create(newCategory);
+				await this.categoriesRepository.create(newCategory);
 			}
 		}
 	}
