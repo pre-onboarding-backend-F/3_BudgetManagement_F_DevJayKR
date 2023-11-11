@@ -5,7 +5,7 @@ import { AGE_GROUPS } from 'src/auth/users/constants/age-groups.constant';
 
 export class CustomValidator {
 	static IsNotEmpty() {
-		return IsNotEmpty({ message: '$property 필드는 필수 입력값입니다.' });
+		return IsNotEmpty({ message: '$property 필드는 필수 입력 필드입니다.' });
 	}
 
 	static IsString() {
@@ -20,7 +20,7 @@ export class CustomValidator {
 	}
 
 	static IsUsername() {
-		return applyDecorators(this.IsNotEmpty(), this.IsString(), this.Length(4, 12));
+		return applyDecorators(this.IsNotEmpty(), this.IsString(), this.Length(5, 12));
 	}
 
 	static IsPassword() {
