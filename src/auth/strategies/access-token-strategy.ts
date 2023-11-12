@@ -18,6 +18,10 @@ export class AtStrategy extends PassportStrategy(Strategy, 'access-token') {
 	}
 
 	async validate(payload: TokenPayload) {
-		return payload;
+		return {
+			id: payload.id,
+			username: payload.username,
+			ageGroup: payload.ageGroup,
+		};
 	}
 }

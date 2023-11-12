@@ -14,6 +14,8 @@ services:
             - db
         networks:
             - local-network
+        environment:
+            - TZ=Asia/Seoul
 
     db:
         image: postgres
@@ -22,6 +24,7 @@ services:
             POSTGRES_USER: ${POSTGRESQL_USERNAME}
             POSTGRES_PASSWORD: ${POSTGRESQL_PASSWORD}
             POSTGRES_DB: ${POSTGRESQL_DATABASE}
+            TZ: Asia/Seoul
         restart: always
         volumes:
             - db:/var/lib/postgresql/data
