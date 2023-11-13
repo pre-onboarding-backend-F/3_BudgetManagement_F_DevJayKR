@@ -1,6 +1,16 @@
 import { applyDecorators } from '@nestjs/common';
 import { Expose, Transform } from 'class-transformer';
-import { IsDateString, IsEnum, IsIn, IsNotEmpty, IsNumberString, IsString, Length, Matches } from 'class-validator';
+import {
+	IsBooleanString,
+	IsDateString,
+	IsEnum,
+	IsIn,
+	IsNotEmpty,
+	IsNumberString,
+	IsString,
+	Length,
+	Matches,
+} from 'class-validator';
 import { AGE_GROUPS } from 'src/auth/users/constants/age-groups.constant';
 import { Categories } from 'src/categories/enum/category.enum';
 import { IsPastDay } from '../decorators/is-past-day.decorator';
@@ -15,6 +25,12 @@ export class CustomValidator {
 			IsString({ message: '$property 필드는 문자열이어야 합니다.' }),
 			Transform(({ value }) => value?.trim()),
 		);
+	}
+
+	static IsBoolean() {
+		return IsBooleanString({
+			message: '$property 필드는 문자열로 이루어진 boolean 값이어야 합니다.',
+		});
 	}
 
 	static IsDateString() {

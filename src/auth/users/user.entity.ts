@@ -4,6 +4,7 @@ import { Exclude, Expose } from 'class-transformer';
 import { SoftDeleteEntity } from 'src/global/common/abstract.entity';
 import { AGE_GROUPS } from './constants/age-groups.constant';
 import { Budget } from 'src/budgets/budget.entity';
+import { Expend } from 'src/expends/expend.entity';
 
 @Entity({ name: 'users' })
 export class User extends SoftDeleteEntity<User> {
@@ -27,6 +28,9 @@ export class User extends SoftDeleteEntity<User> {
 
 	@OneToMany(() => Budget, (budget) => budget.user)
 	budgets: Budget[];
+
+	@OneToMany(() => Expend, (expend) => expend.user)
+	expends: Expend[];
 
 	@BeforeInsert()
 	async encryption() {

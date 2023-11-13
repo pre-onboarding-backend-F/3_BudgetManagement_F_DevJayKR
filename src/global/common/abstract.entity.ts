@@ -9,17 +9,17 @@ export class AbstractEntity<T> {
 	@PrimaryGeneratedColumn('uuid')
 	id: string;
 
-	@CreateDateColumn()
+	@CreateDateColumn({ name: 'created_at' })
 	@Expose({ name: 'created_at' })
 	createdAt: Date;
 
-	@UpdateDateColumn({ default: null })
+	@UpdateDateColumn({ default: null, name: 'updated_at' })
 	@Expose({ name: 'updated_at' })
 	updatedAt: Date;
 }
 
 export class SoftDeleteEntity<T> extends AbstractEntity<T> {
-	@DeleteDateColumn({ default: null })
+	@DeleteDateColumn({ default: null, name: 'deleted_at' })
 	@Exclude()
 	deletedAt: Date;
 }
