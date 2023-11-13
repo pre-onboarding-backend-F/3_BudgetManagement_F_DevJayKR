@@ -9,6 +9,7 @@ import { HttpExceptionFilter } from './global/filters/http-exception.filter';
 import { ValidationExceptionFilter } from './global/filters/validation-exception.filter';
 import { CategoriesModule } from './categories/categories.module';
 import { BudgetsModule } from './budgets/budgets.module';
+import { ExpendsModule } from './expends/expends.module';
 
 @Module({
 	imports: [
@@ -18,6 +19,7 @@ import { BudgetsModule } from './budgets/budgets.module';
 		UsersModule,
 		CategoriesModule,
 		BudgetsModule,
+		ExpendsModule,
 	],
 	providers: [
 		{

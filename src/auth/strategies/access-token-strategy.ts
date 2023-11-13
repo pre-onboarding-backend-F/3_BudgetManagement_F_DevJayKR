@@ -4,6 +4,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import jwtConfiguration from 'src/global/configs/jwt-configuration';
 import { TokenPayload } from '../interfaces/token-payload';
+import { User } from '../users/user.entity';
 
 @Injectable()
 export class AtStrategy extends PassportStrategy(Strategy, 'access-token') {
@@ -22,6 +23,6 @@ export class AtStrategy extends PassportStrategy(Strategy, 'access-token') {
 			id: payload.id,
 			username: payload.username,
 			ageGroup: payload.ageGroup,
-		};
+		} as User;
 	}
 }

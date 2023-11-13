@@ -1,8 +1,9 @@
 import { Expose } from 'class-transformer';
 import { User } from 'src/auth/users/user.entity';
 import { Category } from 'src/categories/category.entity';
+import { Expend } from 'src/expends/expend.entity';
 import { SoftDeleteEntity } from 'src/global/common/abstract.entity';
-import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 
 @Entity({ name: 'budgets' })
 export class Budget extends SoftDeleteEntity<Budget> {
@@ -12,7 +13,7 @@ export class Budget extends SoftDeleteEntity<Budget> {
 	@JoinColumn({ name: 'user_id' })
 	user: User;
 
-	@OneToOne(() => Category, (category) => category.budget)
+	@ManyToOne(() => Category, (category) => category.budget)
 	@JoinColumn({ referencedColumnName: 'name', name: 'category_name' })
 	category: Category;
 
@@ -26,4 +27,7 @@ export class Budget extends SoftDeleteEntity<Budget> {
 	@Column({ name: 'ended_at' })
 	@Expose({ name: 'ended_at' })
 	endedAt: Date;
+
+	@OneToMany(() => Expend, (expend) => expend.budget)
+	expends: Expend[];
 }

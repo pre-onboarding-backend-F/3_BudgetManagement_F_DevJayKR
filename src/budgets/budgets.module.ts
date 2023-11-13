@@ -10,5 +10,6 @@ import { CategoriesModule } from 'src/categories/categories.module';
 	imports: [TypeOrmModule.forFeature([Budget]), CategoriesModule],
 	controllers: [BudgetsController],
 	providers: [BudgetsService, BudgetsRepository],
+	exports: [BudgetsService],
 })
 export class BudgetsModule {}
