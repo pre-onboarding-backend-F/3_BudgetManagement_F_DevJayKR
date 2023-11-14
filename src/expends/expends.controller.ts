@@ -4,7 +4,6 @@ import { ExpendsService } from './expends.service';
 import { AtGuard } from 'src/auth/guards/at-auth.guard';
 import { CurrentUser } from 'src/global/decorators/current-user.decorator';
 import { User } from 'src/auth/users/user.entity';
-import { BudgetExistGuard } from './guards/budget-exist.guard';
 import { CurrentBudget } from 'src/global/decorators/current-budget.decorator';
 import { Budget } from 'src/budgets/budget.entity';
 import { FindExpendsQueryDto } from './dto/find-expends.dto';
@@ -16,7 +15,6 @@ export class ExpendsController {
 	constructor(private readonly expendsService: ExpendsService) {}
 
 	@Post()
-	@UseGuards(BudgetExistGuard)
 	async create(@CurrentUser() user: User, @Body() dto: CreateExpendDto, @CurrentBudget() budget: Budget) {
 		return await this.expendsService.create(user, dto, budget);
 	}
