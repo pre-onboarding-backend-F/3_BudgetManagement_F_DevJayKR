@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { User } from './user.entity';
 import { FindOptionsWhere } from 'typeorm';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
@@ -10,15 +10,12 @@ export class UsersService {
 	constructor(private readonly usersRepository: UsersRepository) {}
 
 	async create(dto: CreateUserDto) {
-		const newUser = new User(dto);
+		await this.validateUserExist(dto.username);
 
+		const newUser = new User(dto);
 		await this.usersRepository.create(newUser);
 
 		return await this.findOne({ username: dto.username });
-	}
-
-	async exist(where: FindOptionsWhere<User>) {
-		return await this.usersRepository.exist(where);
 	}
 
 	async findOne(where: FindOptionsWhere<User>) {
@@ -27,5 +24,13 @@ export class UsersService {
 
 	async update(where: FindOptionsWhere<User>, partialEntity: QueryDeepPartialEntity<User>) {
 		return await this.usersRepository.findOneAndUpdate(where, partialEntity);
+	}
+
+	private async validateUserExist(username: string) {
+		const user = await this.usersRepository.exist({ username });
+
+		if (user) {
+			throw new BadRequestException('이미 존재하는 유저네임입니다.');
+		}
 	}
 }
