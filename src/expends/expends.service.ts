@@ -4,7 +4,6 @@ import { ExpendsRepository } from './expends.repository';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateExpendDto } from './dto/create-expend.dto';
 import { Expend } from './expend.entity';
-import { Budget } from 'src/budgets/budget.entity';
 import { EntityManager } from 'typeorm';
 import { UpdateExpendDto } from './dto/update-expend.dto';
 import { Categories } from 'src/categories/enum/category.enum';
@@ -18,8 +17,8 @@ export class ExpendsService {
 		private readonly entityManager: EntityManager,
 	) {}
 
-	async create(user: User, dto: CreateExpendDto, budget: Budget) {
-		await this.validateBudget(user, dto.category);
+	async create(user: User, dto: CreateExpendDto) {
+		const budget = await this.findBudget(user, dto.category);
 
 		const newExpend = new Expend({
 			expense: dto.expense,
@@ -62,8 +61,8 @@ export class ExpendsService {
 		});
 	}
 
-	private async validateBudget(user: User, category: Categories) {
-		const validate = await this.budgetsService.findOne({
+	private async findBudget(user: User, category: Categories) {
+		const budget = await this.budgetsService.findOne({
 			user: {
 				id: user.id,
 			},
@@ -72,7 +71,9 @@ export class ExpendsService {
 			},
 		});
 
-		if (!validate) throw new BadRequestException('존재하지않는 예산에 지출을 기록할 수 없습니다.');
+		if (!budget) throw new BadRequestException('존재하지않는 예산에 지출을 기록할 수 없습니다.');
+
+		return budget;
 	}
 
 	private async findQueryBuilder(user: User, findExpendsQueryDto: FindExpendsQueryDto) {
