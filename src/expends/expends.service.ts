@@ -8,6 +8,7 @@ import { EntityManager } from 'typeorm';
 import { UpdateExpendDto } from './dto/update-expend.dto';
 import { Categories } from 'src/categories/enum/category.enum';
 import { BudgetsService } from 'src/budgets/budgets.service';
+import { Budget } from 'src/budgets/budget.entity';
 
 @Injectable()
 export class ExpendsService {
@@ -30,6 +31,28 @@ export class ExpendsService {
 		});
 
 		return await this.expendsRepository.create(newExpend);
+	}
+
+	async todayExpenseRecommend(user: User) {
+		const qb = this.entityManager.createQueryBuilder(Budget, 'budget');
+		qb.select('budget.category');
+		qb.addSelect('budget.budget as total_budget');
+		qb.addSelect('COUNT(CASE WHEN expends.except = false THEN 1 END)::integer as expended_count');
+		qb.addSelect('COUNT(CASE WHEN expends.except = true THEN 1 END)::integer as excepted_count');
+		qb.addSelect('EXTRACT(DAY FROM budget.ended_at - NOW())::integer AS due_days');
+		qb.addSelect(
+			'CASE WHEN ROUND((budget - COALESCE(SUM(CASE WHEN expends.except = false THEN expends.expense ELSE 0 END), 0)) / EXTRACT(DAY FROM budget.ended_at - NOW()), -2)::integer <= 0 THEN 1000::integer ELSE ROUND((budget - COALESCE(SUM(CASE WHEN expends.except = false THEN expends.expense ELSE 0 END), 0)) / EXTRACT(DAY FROM budget.ended_at - NOW()), -2)::integer END AS todays_recommend_expense',
+		);
+		qb.leftJoin('budget.expends', 'expends');
+		qb.leftJoin('budget.category', 'category');
+		qb.where('budget.user = :userId', { userId: user.id });
+		qb.andWhere('budget.endedAt >= now()');
+		qb.groupBy('budget.id');
+		qb.orderBy('todays_recommend_expense', 'DESC');
+
+		const result = await qb.getRawMany();
+
+		return result;
 	}
 
 	async find(user: User, dto: FindExpendsQueryDto) {

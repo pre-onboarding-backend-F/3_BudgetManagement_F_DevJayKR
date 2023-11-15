@@ -4,15 +4,25 @@ import { CategoriesService } from 'src/categories/categories.service';
 import { Budget } from './budget.entity';
 import { Categories } from 'src/categories/enum/category.enum';
 import { User } from 'src/auth/users/user.entity';
-import { FindOptionsRelations, FindOptionsWhere } from 'typeorm';
+import {
+	FindOptionsRelations,
+	FindOptionsWhere,
+	EntityManager,
+	LessThanOrEqual,
+	MoreThan,
+	Not,
+	LessThan,
+} from 'typeorm';
 import { CreateBudgetDto } from './dto/create-budget.dto';
 import { UpdateBudgetDto } from './dto/update-budget.dto';
+import { RecommendBudgetDto } from './dto/recommend-budget.dto';
 
 @Injectable()
 export class BudgetsService {
 	constructor(
 		private readonly budgetsRepository: BudgetsRepository,
 		private readonly categoriesService: CategoriesService,
+		private readonly entityManager: EntityManager,
 	) {}
 
 	private async findOneCategory(name: Categories) {
@@ -69,8 +79,35 @@ export class BudgetsService {
 				user: {
 					id: user.id,
 				},
+				endedAt: MoreThan(new Date()) && Not(LessThan(new Date())),
 			},
 		});
+	}
+
+	async setRecommend(user: User, dto: RecommendBudgetDto) {
+		const recommends = await this.recommendCategory();
+
+		// TODO: 여기 개발해야함,
+		// recommends :>>  [ { category_name: '문화', use_count: '1', average_budget: '23000' } ]
+		// average budget을 퍼센트로 변환해서 dto로 들어온 budget으로 해당 퍼센테이지만큼 할당
+
+		console.log('recommends :>> ', recommends);
+	}
+
+	async recommendCategory() {
+		const qb = await this.entityManager
+			.createQueryBuilder(Budget, 'b')
+			.select('c.name', 'category_name')
+			.addSelect('COUNT(c.name)', 'use_count')
+			.addSelect('AVG(b.budget)::numeric(10, 0)', 'average_budget')
+			.leftJoin('b.category', 'c')
+			.groupBy('c.name')
+			.addGroupBy('c.id')
+			.orderBy('"use_count"', 'DESC')
+			.limit(3)
+			.getRawMany();
+
+		return qb;
 	}
 
 	async findOne(where: FindOptionsWhere<Budget>, relations?: FindOptionsRelations<Budget>) {

@@ -5,9 +5,10 @@ import { AtGuard } from 'src/auth/guards/at-auth.guard';
 import { CurrentUser } from 'src/global/decorators/current-user.decorator';
 import { User } from 'src/auth/users/user.entity';
 import { UpdateBudgetDto } from './dto/update-budget.dto';
+import { RecommendBudgetDto } from './dto/recommend-budget.dto';
 
-@UseGuards(AtGuard)
 @Controller('budgets')
+@UseGuards(AtGuard)
 export class BudgetsController {
 	constructor(private readonly budgetsService: BudgetsService) {}
 
@@ -19,6 +20,11 @@ export class BudgetsController {
 	@Get()
 	async find(@CurrentUser() user: User) {
 		return await this.budgetsService.find(user);
+	}
+
+	@Post('/recommend')
+	async recommend(@CurrentUser() user: User, @Body() recommendBudgetDto: RecommendBudgetDto) {
+		return await this.budgetsService.setRecommend(user, recommendBudgetDto);
 	}
 
 	@Put('/:id')
