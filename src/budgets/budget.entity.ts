@@ -17,7 +17,7 @@ export class Budget extends SoftDeleteEntity<Budget> {
 	@JoinColumn({ referencedColumnName: 'name', name: 'category_name' })
 	category: Category;
 
-	@Column({ comment: '만원 단위' })
+	@Column({ comment: '원 단위' })
 	budget: number;
 
 	@Column({ name: 'started_at' })

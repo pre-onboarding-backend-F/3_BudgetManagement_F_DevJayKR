@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, Delete } from '@nestjs/common';
 import { User } from './user.entity';
 import { FindOptionsWhere } from 'typeorm';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
@@ -24,6 +24,10 @@ export class UsersService {
 
 	async update(where: FindOptionsWhere<User>, partialEntity: QueryDeepPartialEntity<User>) {
 		return await this.usersRepository.findOneAndUpdate(where, partialEntity);
+	}
+
+	async deleteAll() {
+		return await this.usersRepository.deleteAll();
 	}
 
 	private async validateUserExist(username: string) {

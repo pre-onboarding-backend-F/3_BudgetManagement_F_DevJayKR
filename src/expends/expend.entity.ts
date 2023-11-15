@@ -22,8 +22,6 @@ export class Expend extends AbstractEntity<Expend> {
 	@ManyToOne(() => User, (user) => user.expends)
 	user: User;
 
-	@ManyToOne(() => Budget, (budget) => budget.expends, {
-		onDelete: 'CASCADE',
-	})
+	@ManyToOne(() => Budget, (budget) => budget.expends, { onDelete: 'CASCADE' })
 	budget: Budget;
 }

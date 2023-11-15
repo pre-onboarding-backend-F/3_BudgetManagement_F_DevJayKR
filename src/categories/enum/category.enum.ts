@@ -6,4 +6,5 @@ export enum Categories {
 	CULTURAL = '문화',
 	TRAVEL = '여행',
 	EDUCATION = '교육',
+	ETC = '기타',
 }
