@@ -10,18 +10,20 @@
 ## Requirements analysis
 [**요구사항 분석 (NOTION LINK)**](https://www.notion.so/6759b4132de74fffa80663ad641de2ba?pvs=4)
 
+![image](https://github.com/pre-onboarding-backend-F/3_BudgetManagement_F_DevJayKR/assets/106816875/f05a5869-41b5-4b25-b3d5-28b6deefcef9)
+
 ## API sheet
 [**API 명세서 (NOTION LINK)**](https://www.notion.so/API-b8ebddb35b33467f83953f9932f79f99?pvs=4)
 
 ## Modeling
-![modeling](https://file.notion.so/f/f/85d820b1-185a-4663-a4bf-2965b3c0d0fe/46e1442c-0902-48dd-b22d-9f63742cb1a7/budget_management_erd.png?id=fce3361c-b7ab-4724-b542-efa8d9c69ab6&table=block&spaceId=85d820b1-185a-4663-a4bf-2965b3c0d0fe&expirationTimestamp=1700265600000&signature=8iBMUnGdtA_CzuN4V94bLf7Lh_FiwSt_JjQusgJ-MEo&downloadName=budget_management_erd.png)
+![modeling](https://github.com/pre-onboarding-backend-F/3_BudgetManagement_F_DevJayKR/assets/106816875/ee9c9ba5-b0f8-4d41-a534-d5cfeb12addd)
 
 ## 업무 도구
 
 ### 일정 및 문서 관리
 - Notion
 
-![schedule](https://file.notion.so/f/f/85d820b1-185a-4663-a4bf-2965b3c0d0fe/549d312c-4bc3-4701-8bcf-4ba89f150a0e/Untitled.png?id=9f006bc7-83ee-4141-b4da-bf6b25312e35&table=block&spaceId=85d820b1-185a-4663-a4bf-2965b3c0d0fe&expirationTimestamp=1700265600000&signature=mSwQB13E2D28WVWbPDA5ugTwMUqMik4CSqSwuDJMCYA&downloadName=Untitled.png)
+![schedule](https://github.com/pre-onboarding-backend-F/3_BudgetManagement_F_DevJayKR/assets/106816875/0d5ba128-872e-4c4f-937f-76eef3c897bb)
 
 ## Installation
 ### Prerequisite
